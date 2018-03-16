@@ -54,19 +54,11 @@ public class HoleDraw implements GameItem {
 
     @Override
     public int getx() {
-<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
         return horizontal;
-=======
-        return getHorizontal();
->>>>>>> Ajout du score
     }
 
     @Override
     public int gety() {
-<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
         return vertical;
-=======
-        return getVertical();
->>>>>>> Ajout du score
     }
 }

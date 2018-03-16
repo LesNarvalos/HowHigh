@@ -47,11 +47,7 @@ public class GameActivity extends AppCompatActivity {
         float xmax = (float)display.getWidth() - 120;
         float ymax = (float)display.getHeight()-430;
 
-<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
         gameManager = new GameManager(getApplicationContext(), getWindowManager().getDefaultDisplay());
-=======
-        gameManager = new GameManager(getApplicationContext(),getWindowManager().getDefaultDisplay());
->>>>>>> Ajout du score
         moveAlpiniste = new MoveAlpiniste(this,gameManager,ymax,xmax);
 
         handler = new Handler();

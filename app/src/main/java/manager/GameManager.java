@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -46,11 +47,7 @@ public class GameManager extends SurfaceView {
 
     private int time = 1;
 
-<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
-    private Context context;
-=======
     private int total = 0;
->>>>>>> Ajout du score
 
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
@@ -66,9 +63,19 @@ public class GameManager extends SurfaceView {
 
     public GameManager(Context context, Display display) {
         super(context);
-        this.context = context;
         metrics = new DisplayMetrics();
         display.getMetrics(metrics);
+        database.getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                record = dataSnapshot.child("Record").getValue(Long.class).toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -91,14 +98,18 @@ public class GameManager extends SurfaceView {
                     if (item2.getClass() != DrawApliniste.class){
                         System.out.println("na me class"+item2.getClass().getName());
                         System.out.println("x item2 "+item2.getx());
-                        if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150){
+                        if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150) {
+
+                            if (Integer.decode(record).intValue() < total) {
+                                database.getReference().child("Record").setValue(String.valueOf(total));
+                            }
 
                         onFinishInflate();
                         }
                     }
                 }
-                }
             }
+        }
             //item.display(canvas);
 
 
