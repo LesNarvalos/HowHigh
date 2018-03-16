@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -58,16 +59,25 @@ public class StartActivity extends AppCompatActivity {
         handler = new Handler();
         handler.postDelayed(runnable, 500);
 
-        gameManager = new GameManager(getApplicationContext());
+        gameManager = new GameManager(getApplicationContext(),getWindowManager().getDefaultDisplay());
 
-        rockDraw = new RockDraw(this, 50);
-        gameManager.getListGameItem().add(rockDraw);
-        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        initiateGameManager();
 
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
         record = (TextView) findViewById(R.id.record);
+    }
 
+    public void launchGame(View view) {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    public void quit(View view) {
+        this.finish();
+    }
+
+    public void getRecord() {
         database.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,13 +92,8 @@ public class StartActivity extends AppCompatActivity {
         });
     }
 
-    public void launchGame(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
-
-    public void quit(View view) {
-        this.finish();
+    public void initiateGameManager() {
+        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     public void onPause() {

@@ -15,9 +15,9 @@ import manager.GameItem;
  * Created by etudiant on 16/03/18.
  */
 
-public class RockDraw implements GameItem {
+public class YetiDraw implements GameItem {
 
-    private static final Logger LOGGER = Logger.getLogger(RockDraw.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(YetiDraw.class.getName());
 
     private Bitmap bitmap;
 
@@ -29,9 +29,9 @@ public class RockDraw implements GameItem {
 
     private SurfaceHolder holder;
 
-    public RockDraw(Context context, int horizontal) {
+    public YetiDraw(Context context, int horizontal) {
         this.horizontal = horizontal;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.yeti);
     }
 
     public int getHorizontal() {
