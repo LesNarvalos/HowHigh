@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Display;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,17 +38,15 @@ public class StartActivity extends AppCompatActivity {
 
     private Handler handler;
 
-    private Display display;
-
     private RockDraw rockDraw;
 
-    private GameManager gameManager = new GameManager();
+    private GameManager gameManager;
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            GameManager.update();
-            handler.postDelayed(this, 0);
+            gameManager.update();
+            handler.postDelayed(this, 100);
         }
     };
 
@@ -56,14 +55,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        display = getWindowManager().getDefaultDisplay();
-
         handler = new Handler();
         handler.postDelayed(runnable, 500);
 
+        gameManager = new GameManager(getApplicationContext());
+
         rockDraw = new RockDraw(this, 50);
-        GameManager.getListGameItem().add(rockDraw);
-        addContentView(rockDraw, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        gameManager.getListGameItem().add(rockDraw);
+        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
