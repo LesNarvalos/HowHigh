@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import draw.HoleDraw;
 import draw.RockDraw;
 import draw.YetiDraw;
 
@@ -76,6 +77,9 @@ public class GameManager extends SurfaceView {
             }
             if ((random % 2) == 0) {
                 listGameItem.add(new YetiDraw(getContext(), random % metrics.widthPixels));
+            }
+            else if ((random % 3) == 0) {
+                listGameItem.add(new HoleDraw(getContext(), random % metrics.widthPixels));
             }
             else {
                 listGameItem.add(new RockDraw(getContext(), random % metrics.widthPixels));
