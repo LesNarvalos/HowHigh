@@ -1,7 +1,9 @@
-package m2dl.com.howhigh;
+package m2dl.com.howhigh.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import m2dl.com.howhigh.R;
 
 public class GameActivity extends AppCompatActivity {
 

@@ -1,9 +1,16 @@
-package m2dl.com.howhigh;
+package m2dl.com.howhigh.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.logging.Logger;
+
+import draw.RockDraw;
+import m2dl.com.howhigh.R;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -26,10 +36,27 @@ public class StartActivity extends AppCompatActivity {
 
     private static final Logger LOGGER = Logger.getLogger(StartActivity.class.getName());
 
+    private Handler handler;
+
+    private RockDraw rockDraw;
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            printRock();
+            handler.postDelayed(this, 500);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        rockDraw = new RockDraw(this, 50);
+
+        handler = new Handler();
+        handler.postDelayed(runnable, 500);
 
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
@@ -38,10 +65,8 @@ public class StartActivity extends AppCompatActivity {
         database.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LOGGER.info("On entre dedans");
                 String recordPlayer = dataSnapshot.child("Record").getValue(Long.class).toString();
-                LOGGER.info("Contenu du record : " + recordPlayer);
-                record.setText("Record : " + recordPlayer);
+                record.setText(Html.fromHtml("<b>Record : " + recordPlayer + "</b>"));
             }
 
             @Override
@@ -58,5 +83,20 @@ public class StartActivity extends AppCompatActivity {
 
     public void quit(View view) {
         this.finish();
+    }
+
+    public void onPause() {
+        super.onPause();
+
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+    }
+
+    public void printRock() {
+        int vert=rockDraw.getVertical()+30;
+//        rockDraw.move(vert);
+
+        addContentView(rockDraw, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }

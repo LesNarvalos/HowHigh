@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HowHigh</string>
+    <string name="play"><b>Jouer</b></string>
+    <string name="quit"><b>Quitter</b></string>
 </resources>
