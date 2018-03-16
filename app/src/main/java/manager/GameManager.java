@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ import draw.YetiDraw;
 
 import draw.DrawApliniste;
 import m2dl.com.howhigh.activity.GameActivity;
-import m2dl.com.howhigh.activity.StartActivity;
 
 /**
  * Created by etudiant on 16/03/18.
@@ -43,6 +43,8 @@ public class GameManager extends SurfaceView {
 
     private Context context;
 
+    private GameActivity gameActivity;
+
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
     // Constructors
@@ -51,8 +53,9 @@ public class GameManager extends SurfaceView {
         super(context);
     }
 
-    public GameManager(Context context, Display display) {
+    public GameManager(Context context, Display display, GameActivity gameActivity) {
         super(context);
+        this.gameActivity = gameActivity;
         this.context = context;
         metrics = new DisplayMetrics();
         display.getMetrics(metrics);
@@ -79,7 +82,9 @@ public class GameManager extends SurfaceView {
                         System.out.println("x item2 "+item2.getx());
                         if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150){
 
-                        onFinishInflate();
+                            Toast.makeText(context, "collision",
+                                    Toast.LENGTH_LONG).show();
+                            gameActivity.enActivity();
                         }
                     }
                 }

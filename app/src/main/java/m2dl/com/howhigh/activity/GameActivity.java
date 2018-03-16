@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
         float xmax = (float)display.getWidth() - 120;
         float ymax = (float)display.getHeight()-430;
 
-        gameManager = new GameManager(getApplicationContext(), getWindowManager().getDefaultDisplay());
+        gameManager = new GameManager(getApplicationContext(), getWindowManager().getDefaultDisplay(),this);
         moveAlpiniste = new MoveAlpiniste(this,gameManager,ymax,xmax);
         handler = new Handler();
         handler.postDelayed(runnable, 500);
@@ -71,5 +71,10 @@ public class GameActivity extends AppCompatActivity {
         }
         return true;
         //return super.onTouchEvent(event);
+    }
+
+    public void enActivity(){
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
     }
 }
