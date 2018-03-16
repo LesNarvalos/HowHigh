@@ -6,12 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +47,15 @@ public class GameManager extends SurfaceView {
 
     private int time = 1;
 
-    private Context context;
+    private int total = 0;
 
     private GameActivity gameActivity;
 
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private String record;
 
     // Constructors
 
@@ -56,9 +66,20 @@ public class GameManager extends SurfaceView {
     public GameManager(Context context, Display display, GameActivity gameActivity) {
         super(context);
         this.gameActivity = gameActivity;
-        this.context = context;
+
         metrics = new DisplayMetrics();
         display.getMetrics(metrics);
+        database.getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                record = dataSnapshot.child("Record").getValue(Long.class).toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -67,6 +88,7 @@ public class GameManager extends SurfaceView {
     }
 
     public void update() {
+        total = total + 30;
         addBlock();
         holder = getHolder();
         Canvas canvas = holder.lockCanvas();
@@ -80,16 +102,19 @@ public class GameManager extends SurfaceView {
                     if (item2.getClass() != DrawApliniste.class){
                         System.out.println("na me class"+item2.getClass().getName());
                         System.out.println("x item2 "+item2.getx());
-                        if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150){
+                        if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150) {
 
-                            Toast.makeText(context, "collision",
-                                    Toast.LENGTH_LONG).show();
+                            if (Integer.decode(record).intValue() < total) {
+                                database.getReference().child("Record").setValue(String.valueOf(total));
+                            }
+
+
                             gameActivity.enActivity();
                         }
                     }
                 }
-                }
             }
+        }
             //item.display(canvas);
 
 
@@ -144,5 +169,23 @@ public class GameManager extends SurfaceView {
 
     public void setListGameItem(List<GameItem> listGameItem) {
         listGameItem = listGameItem;
+    }
+
+    public void getRecord() {
+        database.getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                record = dataSnapshot.child("Record").getValue(Long.class).toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public int getTotal() {
+        return total;
     }
 }
