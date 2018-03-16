@@ -1,14 +1,12 @@
 package m2dl.com.howhigh.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +21,7 @@ import java.util.logging.Logger;
 
 import draw.RockDraw;
 import m2dl.com.howhigh.R;
+import manager.GameManager;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -38,13 +37,17 @@ public class StartActivity extends AppCompatActivity {
 
     private Handler handler;
 
+    private Display display;
+
     private RockDraw rockDraw;
+
+    private GameManager gameManager = new GameManager();
 
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            printRock();
-            handler.postDelayed(this, 500);
+            GameManager.update();
+            handler.postDelayed(this, 0);
         }
     };
 
@@ -53,10 +56,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        rockDraw = new RockDraw(this, 50);
+        display = getWindowManager().getDefaultDisplay();
 
         handler = new Handler();
         handler.postDelayed(runnable, 500);
+
+        rockDraw = new RockDraw(this, 50);
+        GameManager.getListGameItem().add(rockDraw);
+        addContentView(rockDraw, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
@@ -91,12 +98,5 @@ public class StartActivity extends AppCompatActivity {
         if (handler != null) {
             handler.removeCallbacks(runnable);
         }
-    }
-
-    public void printRock() {
-        int vert=rockDraw.getVertical()+30;
-//        rockDraw.move(vert);
-
-        addContentView(rockDraw, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 }
