@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "252106267620",
+    "firebase_url": "https://howhigh-5aee0.firebaseio.com",
+    "project_id": "howhigh-5aee0",
+    "storage_bucket": "howhigh-5aee0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252106267620:android:21d2da7a12cdac0c",
+        "android_client_info": {
+          "package_name": "m2dl.com.howhigh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252106267620-dr5c9q0v4s64es1sktnlf3dnij49kb7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7kFoUFlUGyx4OXAggtDssHV-U1a1m4vM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
