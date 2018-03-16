@@ -6,4 +6,5 @@
 /captures
 .externalNativeBuild
 /bin
+/.idea
 /.idea/*
