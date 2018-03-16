@@ -15,9 +15,9 @@ import manager.GameItem;
  * Created by etudiant on 16/03/18.
  */
 
-public class RockDraw implements GameItem {
+public class HoleDraw implements GameItem {
 
-    private static final Logger LOGGER = Logger.getLogger(RockDraw.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HoleDraw.class.getName());
 
     private Bitmap bitmap;
 
@@ -29,9 +29,9 @@ public class RockDraw implements GameItem {
 
     private SurfaceHolder holder;
 
-    public RockDraw(Context context, int horizontal) {
+    public HoleDraw(Context context, int horizontal) {
         this.horizontal = horizontal;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.rock);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.hole);
     }
 
     public int getHorizontal() {
@@ -53,15 +53,5 @@ public class RockDraw implements GameItem {
     public void display(Canvas canvas) {
         vertical = vertical + verticalModifier;
         canvas.drawBitmap(bitmap, horizontal, vertical, null);
-    }
-
-    @Override
-    public int getx() {
-        return horizontal;
-    }
-
-    @Override
-    public int gety() {
-        return vertical;
     }
 }

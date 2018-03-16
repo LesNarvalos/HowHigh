@@ -11,7 +11,10 @@ public interface GameItem {
     public void display(Canvas canvas);
 
     public int getx();
+
     public int gety();
 
-    //public void clean();
+    public int getHorizontal();
+
+    public int getVertical();
 }

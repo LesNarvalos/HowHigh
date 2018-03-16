@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -36,38 +37,26 @@ public class StartActivity extends AppCompatActivity {
 
     private static final Logger LOGGER = Logger.getLogger(StartActivity.class.getName());
 
-   /* private Handler handler;
-
-    private RockDraw rockDraw;
-
-    private GameManager gameManager;*/
-
-    /*private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            gameManager.update();
-            handler.postDelayed(this, 100);
-        }
-    };*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        /*handler = new Handler();
-        handler.postDelayed(runnable, 500);
-
-        gameManager = new GameManager(getApplicationContext());
-
-        rockDraw = new RockDraw(this, 50);
-        gameManager.getListGameItem().add(rockDraw);
-        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
-
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
         record = (TextView) findViewById(R.id.record);
+    }
 
+    public void launchGame(View view) {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    public void quit(View view) {
+        this.finish();
+    }
+
+    public void getRecord() {
         database.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,21 +70,4 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void launchGame(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
-
-    public void quit(View view) {
-        this.finish();
-    }
-
-   /* public void onPause() {
-        super.onPause();
-
-        if (handler != null) {
-            handler.removeCallbacks(runnable);
-        }
-    }*/
 }
