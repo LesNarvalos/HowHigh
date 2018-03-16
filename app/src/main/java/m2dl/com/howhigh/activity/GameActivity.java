@@ -5,11 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import m2dl.com.howhigh.MoveAlpiniste;
 import m2dl.com.howhigh.R;
 
 public class GameActivity extends AppCompatActivity {
 
-    DrawApliniste apliniste;
+    //DrawApliniste apliniste;
     TextView compteur;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

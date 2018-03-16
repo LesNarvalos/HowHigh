@@ -34,8 +34,12 @@ public class MoveAlpiniste extends Activity implements SensorEventListener{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        sensorX = sensorX+xmax/2;
         int temp =(int) sensorEvent.values[0]*150;
-        sensorX = sensorEvent.values[0]*150;
+        sensorX = (sensorEvent.values[0]+100)*6;
+        System.out.println("sensorX "+sensorEvent.values[0]);
+        System.out.println("sensorY "+sensorEvent.values[1]);
+        System.out.println("sensorZ "+sensorEvent.values[2]);
         //sensorX = (int) Math.pow(sensorEvent.values[0], 2);
 
         if (sensorX > xmax) {
@@ -69,7 +73,7 @@ public class MoveAlpiniste extends Activity implements SensorEventListener{
 
     }
 
-    public class DrawApliniste extends SurfaceView implements Runnable{
+    public class DrawApliniste extends SurfaceView implements Runnable,SensorEventListener{
         SurfaceHolder holder;
         Thread thread = null;
         boolean isRunning = true;
@@ -109,6 +113,39 @@ public class MoveAlpiniste extends Activity implements SensorEventListener{
                 sensorY = ymax;
                 holder.unlockCanvasAndPost(canvas);
             }
+
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent sensorEvent) {
+
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            sensorX = sensorX+xmax/2;
+            int temp =(int) sensorEvent.values[0]*150;
+            sensorX = (sensorEvent.values[0]+100)*6;
+            System.out.println("sensorX "+sensorEvent.values[0]);
+            System.out.println("sensorY "+sensorEvent.values[1]);
+            System.out.println("sensorZ "+sensorEvent.values[2]);
+            //sensorX = (int) Math.pow(sensorEvent.values[0], 2);
+
+            if (sensorX > xmax) {
+                sensorX = xmax;
+            } else if (sensorX < 0) {
+                sensorX = 0;
+            }
+
+            Canvas canvas = holder.lockCanvas();
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(alpiniste,sensorX,sensorY,null);
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
 
         }
     }
