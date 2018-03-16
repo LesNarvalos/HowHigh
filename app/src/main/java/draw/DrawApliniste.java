@@ -65,12 +65,20 @@ public class DrawApliniste implements GameItem {
     }
 
     @Override
+<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
     public int getVertical() {
+=======
+    public int getHorizontal() {
+>>>>>>> Ajout du score
         return 0;
     }
 
     @Override
+<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
     public int getHorizontal() {
+=======
+    public int getVertical() {
+>>>>>>> Ajout du score
         return 0;
     }
 }

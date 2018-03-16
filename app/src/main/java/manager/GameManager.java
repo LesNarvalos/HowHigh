@@ -12,6 +12,11 @@ import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,9 +46,17 @@ public class GameManager extends SurfaceView {
 
     private int time = 1;
 
+<<<<<<< 6d52567d4fcdcf8a5ef291d0139f4501e28369a7
     private Context context;
+=======
+    private int total = 0;
+>>>>>>> Ajout du score
 
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private String record;
 
     // Constructors
 
@@ -64,6 +77,7 @@ public class GameManager extends SurfaceView {
     }
 
     public void update() {
+        total = total + 30;
         addBlock();
         holder = getHolder();
         Canvas canvas = holder.lockCanvas();
@@ -139,5 +153,23 @@ public class GameManager extends SurfaceView {
 
     public void setListGameItem(List<GameItem> listGameItem) {
         listGameItem = listGameItem;
+    }
+
+    public void getRecord() {
+        database.getReference().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                record = dataSnapshot.child("Record").getValue(Long.class).toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public int getTotal() {
+        return total;
     }
 }
