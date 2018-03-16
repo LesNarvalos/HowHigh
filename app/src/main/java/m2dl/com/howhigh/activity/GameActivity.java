@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
         float xmax = (float)display.getWidth() - 120;
         float ymax = (float)display.getHeight()-430;
 
-        gameManager = new GameManager(getApplicationContext());
+        gameManager = new GameManager(getApplicationContext(), getWindowManager().getDefaultDisplay());
         moveAlpiniste = new MoveAlpiniste(this,gameManager,ymax,xmax);
         handler = new Handler();
         handler.postDelayed(runnable, 500);

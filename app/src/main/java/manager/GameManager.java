@@ -1,6 +1,9 @@
 package manager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -19,6 +22,8 @@ import draw.RockDraw;
 import draw.YetiDraw;
 
 import draw.DrawApliniste;
+import m2dl.com.howhigh.activity.GameActivity;
+import m2dl.com.howhigh.activity.StartActivity;
 
 /**
  * Created by etudiant on 16/03/18.
@@ -36,6 +41,8 @@ public class GameManager extends SurfaceView {
 
     private int time = 1;
 
+    private Context context;
+
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
     // Constructors
@@ -46,6 +53,7 @@ public class GameManager extends SurfaceView {
 
     public GameManager(Context context, Display display) {
         super(context);
+        this.context = context;
         metrics = new DisplayMetrics();
         display.getMetrics(metrics);
     }
@@ -62,17 +70,23 @@ public class GameManager extends SurfaceView {
         canvas.drawColor(Color.WHITE);
 
         // collision
-        /*for (GameItem item : listGameItem) {
+        for (GameItem item : listGameItem) {
             if (item.getClass() == DrawApliniste.class){
                 for (GameItem item2 : listGameItem) {
+
                     if (item2.getClass() != DrawApliniste.class){
-                        item.getx()+60
+                        System.out.println("na me class"+item2.getClass().getName());
+                        System.out.println("x item2 "+item2.getx());
+                        if(item.getx()>item2.getx()-150 && item.getx()-60<item2.getx()+150 && item.gety()>item2.gety()-150 && item.gety()-118<item2.gety()+150){
+
+                        onFinishInflate();
+                        }
                     }
                 }
                 }
             }
             //item.display(canvas);
-        }*/
+
 
         for (GameItem item : listGameItem) {
             item.display(canvas);

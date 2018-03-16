@@ -38,20 +38,27 @@ public class HoleDraw implements GameItem {
         return horizontal;
     }
 
+    @Override
+    public int getVertical() {
+        return 0;
+    }
+
     public void setHorizontal(int horizontal) {
         this.horizontal = horizontal;
-    }
-
-    public int getVertical() {
-        return vertical;
-    }
-
-    public void setVertical(int vertical) {
-        this.vertical = vertical;
     }
 
     public void display(Canvas canvas) {
         vertical = vertical + verticalModifier;
         canvas.drawBitmap(bitmap, horizontal, vertical, null);
+    }
+
+    @Override
+    public int getx() {
+        return horizontal;
+    }
+
+    @Override
+    public int gety() {
+        return vertical;
     }
 }

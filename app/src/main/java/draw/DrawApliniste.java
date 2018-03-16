@@ -63,4 +63,14 @@ public class DrawApliniste implements GameItem {
     public int gety() {
         return (int)sensorY;
     }
+
+    @Override
+    public int getVertical() {
+        return 0;
+    }
+
+    @Override
+    public int getHorizontal() {
+        return 0;
+    }
 }
