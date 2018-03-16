@@ -8,7 +8,7 @@ import android.graphics.Canvas;
 
 public interface GameItem {
 
-    public void display();
+    public void display(Canvas canvas);
 
-    public void clean();
+    //public void clean();
 }
