@@ -17,15 +17,20 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import draw.DrawApliniste;
+import m2dl.com.howhigh.activity.GameActivity;
+import manager.GameManager;
+
 /**
  * Created by hichem on 16/03/2018.
  */
 
-public class MoveAlpiniste extends Activity implements SensorEventListener{
-    Bitmap alpiniste;
+public class MoveAlpiniste implements SensorEventListener{
+    //Bitmap alpiniste;
     SensorManager sm;
-    DrawApliniste view;
+    DrawApliniste drawalpiniste;
     float x,y, sensorX, sensorY,xmax,ymax;
+    Context mContext;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
@@ -34,23 +39,22 @@ public class MoveAlpiniste extends Activity implements SensorEventListener{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sensorX = sensorX+xmax/2;
-        int temp =(int) sensorEvent.values[0]*150;
-        sensorX = (sensorEvent.values[0]+100)*6;
-        System.out.println("sensorX "+sensorEvent.values[0]);
-        System.out.println("sensorY "+sensorEvent.values[1]);
-        System.out.println("sensorZ "+sensorEvent.values[2]);
-        //sensorX = (int) Math.pow(sensorEvent.values[0], 2);
-
+        sensorX = (sensorX*2)+xmax/2;
+        /*int temp =(int) sensorEvent.values[0]*150;*/
+        sensorX = (int)(sensorEvent.values[0]);
+        sensorX = (-sensorX*80)+xmax/2;
         if (sensorX > xmax) {
             sensorX = xmax;
         } else if (sensorX < 0) {
             sensorX = 0;
         }
+        drawalpiniste.setSensorX(sensorX);
+
+
         //view.run();
     }
 
-    @Override
+/*    @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         try {
@@ -66,110 +70,41 @@ public class MoveAlpiniste extends Activity implements SensorEventListener{
         }
         return true;
         //return super.onTouchEvent(event);
-    }
+    }*/
 
+    public DrawApliniste getDrawalpiniste(){
+        return drawalpiniste;
+    }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
 
-    public class DrawApliniste extends SurfaceView implements Runnable,SensorEventListener{
-        SurfaceHolder holder;
-        Thread thread = null;
-        boolean isRunning = true;
-        public DrawApliniste(Context context) {
-            super(context);
+    public MoveAlpiniste(Context context, GameManager gameManager, float ymax, float xmax) {
 
-            holder = getHolder();
-        }
-
-        public void pause (){
-            isRunning = false;
-            while(true){
-                try {
-                    thread.join();
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-                break;
-            }
-            thread = null;
-        }
-
-        public void resume(){
-            isRunning = true;
-            thread = new Thread(this);
-            thread.start();
-        }
-
-        @Override
-        public void run() {
-            while (isRunning){
-                if(!holder.getSurface().isValid())
-                    continue;
-                Canvas canvas = holder.lockCanvas();
-                canvas.drawColor(Color.WHITE);
-                canvas.drawBitmap(alpiniste,sensorX,sensorY,null);
-                sensorY = ymax;
-                holder.unlockCanvasAndPost(canvas);
-            }
-
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent sensorEvent) {
-
-            try {
-                Thread.sleep(40);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            sensorX = sensorX+xmax/2;
-            int temp =(int) sensorEvent.values[0]*150;
-            sensorX = (sensorEvent.values[0]+100)*6;
-            System.out.println("sensorX "+sensorEvent.values[0]);
-            System.out.println("sensorY "+sensorEvent.values[1]);
-            System.out.println("sensorZ "+sensorEvent.values[2]);
-            //sensorX = (int) Math.pow(sensorEvent.values[0], 2);
-
-            if (sensorX > xmax) {
-                sensorX = xmax;
-            } else if (sensorX < 0) {
-                sensorX = 0;
-            }
-
-            Canvas canvas = holder.lockCanvas();
-            canvas.drawColor(Color.WHITE);
-            canvas.drawBitmap(alpiniste,sensorX,sensorY,null);
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int i) {
-
-        }
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        this.xmax = xmax;
+        this.ymax = ymax;
+        this.mContext = context;
+        sm = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         if (sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size() != 0){
             Sensor s = sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
             sm.registerListener(this,s,SensorManager.SENSOR_DELAY_UI);
 
         }
 
-        alpiniste = BitmapFactory.decodeResource(getResources(),R.drawable.apliniste);
-        //x = y = sensorX = sensorY =0;
-        Display display = getWindowManager().getDefaultDisplay();
+        System.out.println("je passe dans Move alpiniste ");
+        //alpiniste = BitmapFactory.decodeResource(getResources(),R.drawable.apliniste);
+        x = y = sensorX = sensorY =0;
+        drawalpiniste =new DrawApliniste(mContext);
+        /*Display display = getWindowManager().getDefaultDisplay();
         xmax = (float)display.getWidth() - 120;
-        ymax = (float)display.getHeight()-290;
+        ymax = (float)display.getHeight()-290;*/
         sensorY = ymax;
-        view = new DrawApliniste(this);
+        drawalpiniste.setSensorY(sensorY);
+        gameManager.getListGameItem().add(drawalpiniste);
+        /*view = new DrawApliniste(this);
         view.resume();
-        setContentView(view);
+        setContentView(view);*/
 
 
     }

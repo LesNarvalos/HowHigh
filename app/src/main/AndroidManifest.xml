@@ -12,17 +12,16 @@
         <activity
             android:name=".activity.StartActivity"
             android:label="HowHigh">
-
-        </activity>
-
-        <activity android:name=".MoveAlpiniste"></activity>
-
-        <activity android:name=".activity.GameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MoveAlpiniste"></activity>
+
+        <activity android:name=".activity.GameActivity">
         </activity>
     </application>
 

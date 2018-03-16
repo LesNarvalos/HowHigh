@@ -64,4 +64,14 @@ public class RockDraw implements GameItem {
         vertical = vertical + verticalModifier;
         canvas.drawBitmap(bitmap, horizontal, vertical, null);
     }
+
+    @Override
+    public int getx() {
+        return horizontal;
+    }
+
+    @Override
+    public int gety() {
+        return vertical;
+    }
 }

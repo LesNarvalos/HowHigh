@@ -36,33 +36,33 @@ public class StartActivity extends AppCompatActivity {
 
     private static final Logger LOGGER = Logger.getLogger(StartActivity.class.getName());
 
-    private Handler handler;
+   /* private Handler handler;
 
     private RockDraw rockDraw;
 
-    private GameManager gameManager;
+    private GameManager gameManager;*/
 
-    private Runnable runnable = new Runnable() {
+    /*private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             gameManager.update();
             handler.postDelayed(this, 100);
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        handler = new Handler();
+        /*handler = new Handler();
         handler.postDelayed(runnable, 500);
 
         gameManager = new GameManager(getApplicationContext());
 
         rockDraw = new RockDraw(this, 50);
         gameManager.getListGameItem().add(rockDraw);
-        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addContentView(gameManager, new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));*/
 
         playButton = (Button) findViewById(R.id.play);
         quitButton = (Button) findViewById(R.id.quit);
@@ -91,11 +91,11 @@ public class StartActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void onPause() {
+   /* public void onPause() {
         super.onPause();
 
         if (handler != null) {
             handler.removeCallbacks(runnable);
         }
-    }
+    }*/
 }

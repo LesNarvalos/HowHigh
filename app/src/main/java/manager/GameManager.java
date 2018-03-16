@@ -10,6 +10,8 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.List;
 
+import draw.DrawApliniste;
+
 /**
  * Created by etudiant on 16/03/18.
  */
@@ -44,10 +46,24 @@ public class GameManager extends SurfaceView {
         Canvas canvas = holder.lockCanvas();
         canvas.drawColor(Color.WHITE);
 
+        // collision
+        /*for (GameItem item : listGameItem) {
+            if (item.getClass() == DrawApliniste.class){
+                for (GameItem item2 : listGameItem) {
+                    if (item2.getClass() != DrawApliniste.class){
+                        item.getx()+60
+                    }
+                }
+                }
+            }
+            //item.display(canvas);
+        }*/
+
         for (GameItem item : listGameItem) {
             item.display(canvas);
         }
         holder.unlockCanvasAndPost(canvas);
+        //System.out.println("size liste manager"+listGameItem.size());
     }
 
     public List<GameItem> getListGameItem() {
